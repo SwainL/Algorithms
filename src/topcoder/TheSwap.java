@@ -39,13 +39,17 @@ public class TheSwap {
 
     public boolean isLargest(int[] digits, int start) {
         if(start == digits.length - 1) return true;
+        int max_index = start;
         for(int i = start + 1; i < digits.length; i++) {
-            if(digits[i] > digits[start]) {
-                int temp = digits[i];
-                digits[i] = digits[start];
-                digits[start] = temp;
-               return false;
+            if(digits[i] >= digits[max_index]) {
+                max_index = i;
             }
+        }
+        if(max_index != start) {
+            int temp = digits[max_index];
+            digits[max_index] = digits[start];
+            digits[start] = temp;
+            return false;
         }
         start++;
         return isLargest(digits, start);
@@ -53,6 +57,6 @@ public class TheSwap {
 
     public static void main(String[] args) {
         TheSwap ts = new TheSwap();
-        System.out.println(ts.findMax(123, 1));
+        System.out.println(ts.findMax(436659, 2));
     }
 }

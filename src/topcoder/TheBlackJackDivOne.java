@@ -5,10 +5,9 @@ package topcoder;
  * Created by liusiwei on 2017/5/19.
  */
 public class TheBlackJackDivOne {
-
+    int total = 52;
+    int[] count = new int[12];
     public double expected(String[] cards) {
-        int total = 52;
-        int[] count = new int[12];
         for(int i = 2; i < 10; i++) {
             count[i] = 4;
         }
@@ -37,7 +36,7 @@ public class TheBlackJackDivOne {
             return 0.0;
         }
 
-        //double result = 0;
+        double result = 0;
 
         for(int i = 2; i <= 11; i++) {
             if(count[i] > 0) {

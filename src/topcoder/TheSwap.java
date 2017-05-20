@@ -41,11 +41,11 @@ public class TheSwap {
         if(start == digits.length - 1) return true;
         int max_index = start;
         for(int i = start + 1; i < digits.length; i++) {
-            if(digits[i] >= digits[max_index]) {
+            if(digits[i] >= digits[max_index]) {              // it's critical to include "="
                 max_index = i;
             }
         }
-        if(max_index != start) {
+        if(max_index != start && digits[max_index] != digits[start]) {
             int temp = digits[max_index];
             digits[max_index] = digits[start];
             digits[start] = temp;
@@ -57,6 +57,6 @@ public class TheSwap {
 
     public static void main(String[] args) {
         TheSwap ts = new TheSwap();
-        System.out.println(ts.findMax(436659, 2));
+        System.out.println(ts.findMax(87993, 2));
     }
 }

@@ -10,8 +10,14 @@ public class TheSwap {
         if(k == 0) return n;
         if(n < 10 || (n < 100 && n % 10 == 0)) return -1;
         int[] digits =  int2Digits(n);
-
-        return 0;
+        if(isLargest(digits, 0)) {
+            int temp = digits[digits.length - 1];
+            digits[digits.length - 1] = digits[digits.length -2];
+            digits[digits.length - 2] = temp;
+        }
+        k--;
+        n = digits2Int(digits);
+        return findMax(n, k);
     }
 
     public int[] int2Digits(int n) {
@@ -23,19 +29,30 @@ public class TheSwap {
         return digits;
     }
 
-    public boolean isLargest(int[] digits) {
-        if(digits.length == 1) return true;
-        int first = digits[0];
+    public int digits2Int(int[] digits) {
+        StringBuilder sb = new StringBuilder();
         for(int digit : digits) {
-            if(digit > first) {
+            sb.append(digit);
+        }
+        return Integer.parseInt(sb.toString());
+    }
+
+    public boolean isLargest(int[] digits, int start) {
+        if(start == digits.length - 1) return true;
+        for(int i = start + 1; i < digits.length; i++) {
+            if(digits[i] > digits[start]) {
+                int temp = digits[i];
+                digits[i] = digits[start];
+                digits[start] = temp;
                 return false;
             }
         }
-        return isLargest(Arrays.copyOfRange(digits, 1, digits.length));
+        start++;
+        return isLargest(digits, start);
     }
 
     public static void main(String[] args) {
         TheSwap ts = new TheSwap();
-        System.out.println(ts.isLargest(ts.int2Digits(76531)));
+        System.out.println(ts.findMax(1, 1));
     }
 }

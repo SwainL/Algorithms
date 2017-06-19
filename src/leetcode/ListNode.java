@@ -1,5 +1,7 @@
 package leetcode;
 
+import java.util.List;
+
 /**
  * Created by liusiwei on 2017/4/24.
  */
@@ -21,5 +23,11 @@ public class ListNode {
     }
     public String toString() {
         return val + "";
+    }
+    public static String traverse(ListNode head) {
+        if (head == null) {
+            return "null";
+        }
+        return head.val + "->" + traverse(head.next);
     }
 }

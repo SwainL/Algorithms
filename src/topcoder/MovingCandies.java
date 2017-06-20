@@ -3,55 +3,45 @@ package topcoder;
 import java.util.*;
 
 public class MovingCandies {
-    static final int INF = (int) 1e9;
  
     public int minMoved(String[] t) {
-        int height = t.length;
-        int width = t[0].length();
-        int[][] cost = new int[height][width];
-        int totalCandies = 0;
-        for (int r = 0; r < height; ++r) {
-            for (int c = 0; c < width; ++c) {
-                boolean isCandy = t[r].charAt(c) == '#';
-                cost[r][c] = isCandy ? 0 : 1;
-                if (isCandy) ++totalCandies;
+        int[][] dp = new int[t.length][t[0].length()];
+
+        dp[0][0] = t[0].charAt(0) == '#' ? 0 : 1;
+
+        for(int j = 1; j < dp[0].length; j++) {
+            int cost = t[0].charAt(j) == '#' ? 0 : 1;
+            dp[0][j] = dp[0][j - 1] + cost;;
+        }
+
+        for(int i = 1; i < dp.length; i ++) {
+            int cost = t[i].charAt(0) == '#' ? 0 : 1;
+            dp[i][0] = dp[i - 1][0] + cost;
+        }
+
+        for(int i = 1; i < dp.length; i++) {
+            for(int j = 1; j < dp[0].length; j++) {
+                int cost = t[i].charAt(j) == '#' ? 0 : 1;
+                dp[i][j] = Math.min(dp[i - 1][j], dp[i][j - 1]) + cost;
             }
         }
-        int[][] best = new int[height][width];
-        for (int[] x : best) Arrays.fill(x, INF);
-        best[0][0] = cost[0][0];
-        int res = best[height - 1][width - 1];
-        for (int steps = 2; steps <= totalCandies; ++steps) {
-            int[][] nbest = new int[height][width];
-            for (int[] x : nbest) Arrays.fill(x, INF);
-            for (int r = 0; r < height; ++r) {
-                for (int c = 0; c < width; ++c) {
-                    int cur = best[r][c];
-                    if (cur >= INF) continue;
-                    for (int dr = -1; dr <= 1; ++dr) {
-                        for (int dc = -1; dc <= 1; ++dc) {
-                            if (Math.abs(dr) + Math.abs(dc) == 1) {
-                                int nr = r + dr;
-                                int nc = c + dc;
-                                if (nr >= 0 && nr < height && nc >= 0 && nc < width) {
-                                    nbest[nr][nc] = Math.min(nbest[nr][nc], cur + cost[nr][nc]);
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            best = nbest;
-            res = Math.min(res, best[height - 1][width - 1]);
-        }
-        if (res >= INF) res = -1;
-        return res;
+        System.out.println(Arrays.deepToString(dp));
+        return dp[t.length - 1][t[0].length() - 1];
     }
 
     public static void main(String[] args) {
         MovingCandies mc = new MovingCandies();
-        String[] t = new String[] {"#...###", "#...#.#", "##..#.#", ".#....#" };
+        String[] t = new String[] {"###.#########..#####",".#######.###########" };
         System.out.println(mc.minMoved(t));
     }
+
+    /*
+      #  #  #  .  #  #  #  #  #  #  #  #  #  .  .  #  #  #  #  #
+    [[0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 3, 3, 3, 3, 3, 3],
+
+
+      .  #  #  #  #  #  #  #  .  #  #  #  #  #  #  #  #  #  #  #
+     [1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]]
+     */
  
 }

@@ -8,23 +8,30 @@ import java.util.*;
 public class Solution {
 
     public boolean canJump(int[] nums) {
-        int lstZero = 0;
-        for(int i = 0; i < nums.length - 1; i++) {
-            if (nums[i] == 0) {
-                lstZero = i;
-            }
+        if(nums[0] == 0) {
+            return false;
         }
-        for(int i = 0; i < lstZero - 1; i++) {
-            if (nums[i] > lstZero - i) {
-                return true;
+        int maxIndex = 0;
+
+        for(int i = 1; i < nums.length - 1; i++) {
+            if(nums[i] == 0) {
+                if(nums[maxIndex] <= i - maxIndex) {
+                    return false;
+                }
             }
+
+            if (nums[i] + i >= nums[maxIndex]) {
+                maxIndex = i;
+            }
+            System.out.println(nums[maxIndex]);
         }
-        return false;
+        return true;
     }
 
 
     public static void main(String[] args) {
         Solution sol = new Solution();
-
+        int[] nums = new int[] {5,9,3,2,1,0,2,3,3,1,0,0};
+        System.out.println(sol.canJump(nums));
     }
 }

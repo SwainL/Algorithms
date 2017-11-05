@@ -2,6 +2,7 @@ package leetcode;
 
 import java.util.ArrayDeque;
 import java.util.Queue;
+import java.util.Stack;
 
 /**
  * Created by liusiwei on 2017/4/21.
@@ -44,8 +45,28 @@ public class TreeNode {
         traverse(root.right);
     }
 
+
+    public static void postorder(TreeNode root) {
+        Stack<TreeNode> stack = new Stack();
+        if(root != null) {
+            stack.add(root);
+        }
+        TreeNode out = root;
+        while (!stack.isEmpty()) {
+            TreeNode cur = stack.peek();
+            if(cur.left != null && cur.left != out && cur.right != out) {
+                stack.add(cur.left);
+            } else if(cur.right != null && cur.right != out) {
+                stack.add(cur.right);
+            } else {
+                out = stack.pop();
+                System.out.println(out.val);
+            }
+        }
+    }
+
+
     public static void main(String[] args) {
-        TreeNode root = TreeNode.init(new Integer[] {3, 9, 20, null, null, 15, 7});
-        TreeNode.traverse(root);
+        TreeNode root = TreeNode.init(new Integer[] {1, null, 2, 3});
     }
 }

@@ -22,6 +22,7 @@ public class KMPAlgo {
                 }
                 if (pattern.charAt(i) == pattern.charAt(j)) {
                     prefix[i] = j + 1;
+                    ++j;
                 }
             }
         }
@@ -50,6 +51,7 @@ public class KMPAlgo {
 
     public static void main(String[] args) {
         KMPAlgo algo = new KMPAlgo();
-        System.out.println(algo.indexOfSubString("abxabcabcaby", "abcaby"));
+        //System.out.println(algo.indexOfSubString("abxabcabcaby", "abcaby"));
+        System.out.println(algo.indexOfSubString("ababcaababcaabc", "ababcaabc"));
     }
 }
